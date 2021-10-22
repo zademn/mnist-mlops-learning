@@ -1,0 +1,11 @@
+streamlit
+mlflow
+numpy
+pandas
+matplotlib
+torch
+fastapi[all]
+uvicorn
+streamlit-drawable-canvas
+tqdm
+scikit-learn
