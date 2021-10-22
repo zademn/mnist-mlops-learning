@@ -81,6 +81,7 @@ elif page == "Predict":
     except ConnectionError as e:
         st.write("Couldn't reach backend")
     # Setup canvas
+    st.write("Draw something here")
     canvas_res = st_canvas(
         fill_color="black",  # Black
         stroke_width=20,
@@ -110,8 +111,9 @@ elif page == "Predict":
             response_predict = requests.post(url=PREDICT_URL,
                                              data=json.dumps({"input_image": img.tolist(), "model_name": model_name}))
             if response_predict.ok:
-                pred = response_predict.json()
-                st.write(pred)
+                res = response_predict.json()
+                st.markdown(f"**Prediction**: {res['result']}")
+                
             else:
                 st.write("Some error occured")
         except ConnectionError as e:
@@ -137,7 +139,7 @@ elif page == "Delete":
                                      data=json.dumps(to_post))
             if response.ok:
                 res = response.json()
-                st.write(res)
+                st.write(res["result"])
             else:
                 st.write("Some error occured")
         except ConnectionError as e:

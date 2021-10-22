@@ -22,6 +22,12 @@ MLflow UI
 mlflow ui --backend-store-uri sqlite:///bakckend.db
 ```
 
+# Architecture
+![image](resources/arch.png)
+
+# UI 
+![image](resources/train_pic.png)
+![image](resources/pred_pic.png)
 ## TODO
 - [ ] Testing
 - [ ] Maybe add celery instead of that background task? (Needs extra configs though)
