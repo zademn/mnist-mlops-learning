@@ -19,6 +19,10 @@ mlflowclient = MlflowClient(
 
 
 def train_model_task(model_name: str, hyperparams: dict, epochs: int):
+    """Tasks that trains the model. This is supposed to be running in the background
+    Since it's a heavy computation it's better to use a stronger task runner like Celery
+    For the simplicity I kept it as a fastapi background task"""
+
     # Setup env
     device = set_device()
     # Set MLflow tracking
@@ -69,7 +73,7 @@ async def read_root():
 
 @app.get("/models")
 async def get_models_api():
-    mlflowclient
+    """Gets a list with model names"""
     model_list = mlflowclient.list_registered_models()
     model_list = [model.name for model in model_list]
     return model_list
@@ -90,6 +94,7 @@ async def train_api(data: TrainApiData, background_tasks: BackgroundTasks):
 
 @app.post("/predict")
 async def predict_api(data: PredictApiData):
+    """Predicts on the provided image"""
     img = data.input_image
     model_name = data.model_name
     # Fetch the last model in production
@@ -110,11 +115,7 @@ async def predict_api(data: PredictApiData):
 async def delete_model_api(data: DeleteApiData):
     model_name = data.model_name
     version = data.model_version
-
-    # mv = mlflowclient.search_model_versions(
-    #     f"name='{model_name}'")[version]  # Take last model version
-    # mlflowclient.transition_model_version_stage(
-    #     name=mv.name, version=mv.version, stage="archive")
+    
     if version is None:
         # Delete all versions
         mlflowclient.delete_registered_model(name=model_name)

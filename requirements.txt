@@ -4,6 +4,7 @@ numpy
 pandas
 matplotlib
 torch
+torchvision
 fastapi[all]
 uvicorn
 streamlit-drawable-canvas

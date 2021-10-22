@@ -12,9 +12,9 @@ import cv2
 import requests
 import urllib
 import json
-import aiohttp
-import asyncio
 
+
+# Configs
 MODEL_INPUT_SIZE = 28
 CANVAS_SIZE = MODEL_INPUT_SIZE * 8
 BACKEND_URL = "http://localhost:8000"
@@ -31,6 +31,7 @@ page = st.sidebar.selectbox(label="", options=[
 st.sidebar.write("https://github.com/zademn")
 
 if page == "Train":
+    # Conv is not provided yet
     st.session_state.model_type = st.selectbox(
         "Model type", options=["Linear", "Conv"])
 
@@ -45,21 +46,18 @@ if page == "Train":
             hidden_dims[i] = cols[i].number_input(
                 label=f"Number of neurons in layer {i}", min_value=2, max_value=128, value=hidden_dims[i])
 
-    hyperparams = {
-        "input_dim": 28 * 28,
-        "hidden_dims": hidden_dims,
-        "output_dim": 10,
-    }
+        hyperparams = {
+            "input_dim": 28 * 28,
+            "hidden_dims": hidden_dims,
+            "output_dim": 10,
+        }
 
-    epochs = st.number_input("Epochs", min_value=1, value=5, max_value=128)
+        epochs = st.number_input("Epochs", min_value=1, value=5, max_value=128)
 
     if st.button("Train"):
         st.write(f"{hyperparams=}")
-
         to_post = {"model_name": model_name,
                    "hyperparams": hyperparams, "epochs": epochs}
-        # with aiohttp.ClientSession() as session:
-        #     session.post(url=TRAIN_URL, data=json.dumps(to_post))
         response = requests.post(url=TRAIN_URL, data=json.dumps(to_post))
         if response.ok:
             res = response.json()["result"]

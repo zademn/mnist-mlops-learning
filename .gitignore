@@ -148,3 +148,4 @@ cython_debug/
 data/
 *.ipynb
 *.db
+mlruns/
