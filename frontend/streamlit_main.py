@@ -1,23 +1,20 @@
-import numpy as np
-from numpy.lib.function_base import select
-import pandas as pd
-
-import time
 import streamlit as st
-from streamlit.state.session_state import SessionState
 from streamlit_drawable_canvas import st_canvas
-import matplotlib.pyplot as plt
 
 import cv2
 import requests
 import urllib
 import json
-
-
+import os 
 # Configs
 MODEL_INPUT_SIZE = 28
 CANVAS_SIZE = MODEL_INPUT_SIZE * 8
-BACKEND_URL = "http://localhost:8000"
+
+if os.environ.get("BACKEND_URL") is not None:
+    BACKEND_URL = os.environ.get("BACKEND_URL")
+else:
+    BACKEND_URL = "http://localhost:8000"
+
 MODELS_URL = urllib.parse.urljoin(BACKEND_URL, "models")
 TRAIN_URL = urllib.parse.urljoin(BACKEND_URL, "train")
 PREDICT_URL = urllib.parse.urljoin(BACKEND_URL, "predict")

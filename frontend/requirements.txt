@@ -1,0 +1,7 @@
+streamlit
+numpy
+pandas
+matplotlib
+streamlit-drawable-canvas
+opencv-python-headless
+requests

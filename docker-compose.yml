@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  mlflow:
+    build: .
+    volumes:
+      - ./db/backend.db:/db/backend.db
+    ports:
+      - 5000:5000
+    networks:
+      deploy_network:
+    container_name: mlflow_mnist
+
+  fastapi:
+    build:
+      context: ./
+      dockerfile: ./backend/Dockerfile
+    volumes:
+      - ./db/backend.db:/db/backend.db
+    depends_on:
+      - mlflow
+    ports:
+      - 8000:8000
+    networks:
+      deploy_network:
+    container_name: fastapi_mnist
+
+  streamlit:
+    build: frontend/
+    environment:
+      - BACKEND_URL=http://fastapi_mnist:8000
+    depends_on:
+      - fastapi
+    ports:
+      - 8501:8501
+    
+    networks:
+      deploy_network:
+    container_name: streamlit_mnist
+
+networks:
+  deploy_network:
+    driver: bridge
+    # external:
+    #   name: net-name

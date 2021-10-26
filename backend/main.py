@@ -12,7 +12,8 @@ from ml.utils import set_device
 from backend.models import DeleteApiData, TrainApiData, PredictApiData
 
 
-mlflow.set_tracking_uri('sqlite:///backend.db')
+#mlflow.set_tracking_uri('sqlite:///backend.db')
+mlflow.set_tracking_uri("sqlite:///db/backend.db")
 app = FastAPI()
 mlflowclient = MlflowClient(
     mlflow.get_tracking_uri(), mlflow.get_registry_uri())

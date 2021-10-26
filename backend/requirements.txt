@@ -1,0 +1,8 @@
+mlflow
+numpy
+pandas
+matplotlib
+torch
+torchvision
+fastapi[all]
+tqdm
