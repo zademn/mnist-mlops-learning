@@ -10,3 +10,4 @@ uvicorn
 streamlit-drawable-canvas
 tqdm
 scikit-learn
+opencv-python
