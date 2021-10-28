@@ -4,7 +4,7 @@ services:
   mlflow:
     build: .
     volumes:
-      - ./db/backend.db:/db
+      - ./db:/db
     ports:
       - 5000:5000
     networks:
@@ -16,7 +16,7 @@ services:
       context: ./
       dockerfile: ./backend/Dockerfile
     volumes:
-      - ./db/backend.db:/db
+      - ./db:/db
     depends_on:
       - mlflow
     ports:
